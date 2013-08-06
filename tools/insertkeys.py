@@ -8,7 +8,7 @@ import base64
 import sys
 import os
 
-__VERSION = (0, 1)
+__VERSION = (0, 2)
 
 '''
 This tool reads a mac_permissions.xml and replaces keywords in the signature
@@ -102,13 +102,7 @@ class ParseConfig(ConfigParser.ConfigParser):
 
 class ReplaceTags(handler.ContentHandler):
 
-    DEFAULT_TAG = "default"
-    PACKAGE_TAG = "package"
     POLICY_TAG = "policy"
-    SIGNER_TAG = "signer"
-    SIGNATURE_TAG = "signature"
-
-    TAGS_WITH_CHILDREN = [ DEFAULT_TAG, PACKAGE_TAG, POLICY_TAG, SIGNER_TAG ]
 
     XML_ENCODING_TAG = '<?xml version="1.0" encoding="iso-8859-1"?>'
 
@@ -132,24 +126,20 @@ class ReplaceTags(handler.ContentHandler):
 
         for (name, value) in attrs.items():
 
-            if name == ReplaceTags.SIGNATURE_TAG and value in self._keyMap:
+            if value in self._keyMap:
                 for key in self._keyMap[value].getBase16Keys():
                     logging.info("Replacing " + name + " " + value + " with " + key)
                     self._out.write(' %s="%s"' % (name, saxutils.escape(key)))
             else:
                 self._out.write(' %s="%s"' % (name, saxutils.escape(value)))
 
-        if tag in ReplaceTags.TAGS_WITH_CHILDREN:
-            self._out.write('>')
-        else:
-            self._out.write('/>')
+        self._out.write('>')
 
     def endElement(self, tag):
         if tag == ReplaceTags.POLICY_TAG:
             return
 
-        if tag in ReplaceTags.TAGS_WITH_CHILDREN:
-            self._out.write('</%s>' % tag)
+        self._out.write('</%s>' % tag)
 
     def characters(self, content):
         if not content.isspace():

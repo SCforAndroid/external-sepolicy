@@ -1,0 +1,255 @@
+<?xml version="1.0"?>
+<policy>
+
+  <!-- http://developer.android.com/reference/android/nfc/NfcAdapter.html -->
+  <intent>
+    <filter>
+      <action name="android.nfc.action.TECH_DISCOVERED"/>
+    </filter>
+    <allow name="nfc_tech" src="nfc_system" dst="nfc_handler"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.nfc.action.NDEF_DISCOVERED"/>
+    </filter>
+    <allow name="nfc_ndef" src="nfc_system" dst="nfc_handler"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.nfc.action.TAG_DISCOVERED"/>
+    </filter>
+    <allow name="nfc_tag" src="nfc_system" dst="nfc_handler"/>
+  </intent>
+
+  <intent>
+    <filter>
+      <action name="android.intent.action.MAIN"/>
+      <category name="android.intent.category.LAUNCHER"/>
+    </filter>
+    <!-- Allow all apps to send this intent -->
+    <allow name="find_main_activities"/>
+  </intent>
+
+  <intent>
+    <filter>
+      <action name="android.search.action.GLOBAL_SEARCH"/>
+    </filter>
+    <!-- Allows the Search bar on the Launcher home screen to function. -->
+    <allow name="launcher_global_search" src="launcher_app" dst="com.android.quicksearchbox"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.intent.action.SEARCH"/>
+    </filter>
+    <!-- TODO understand -->
+    <allow name="launcher_search" src="launcher_app"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.intent.action.WEB_SEARCH"/>
+    </filter>
+    <!-- TODO Understand -->
+    <allow name="launcher_websearch" src="launcher_app" dst="com.android.quicksearchbox"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.intent.action.CREATE_SHORTCUT"/>
+    </filter>
+    <!-- Allow the launcher to create some widgets/shortcuts -->
+    <allow name="launcher_shortcut" src="launcher_app"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.intent.action.VOICE_COMMAND"/>
+    </filter>
+    <!-- Opens the Bluetooth voice dialer. TODO clarify -->
+    <allow name="bt_voicedial" src="com.android.providers.telephony" dst="com.android.voicedialer"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.intent.action.SET_ALARM"/>
+    </filter>
+    <!-- SET_ALARM to com.android.deskclock pops up a UI for setting an alarm. Safe -->
+    <allow name="ui_setalarm" dst="com.android.deskclock"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.intent.action.MAIN"/>
+      <category name="android.intent.category.HOME"/>
+    </filter>
+    <!-- TODO support category -->
+    <allow name="home_scr" dst="launcher_app"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.intent.action.DIAL"/>
+    </filter>
+    <!-- DIAL to com.android.contacts pops up another UI allowing user to deny the call. Safe -->
+    <allow name="ui_dialer" dst="com.android.contacts"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.settings.SETTINGS"/>
+    </filter>
+    <allow name="drawer_settings" dst="com.android.settings"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.bluetooth.IBluetoothHeadsetPhone"/>
+    </filter>
+    <allow name="bluetooth_platform" src="platform_key" dst="platform_key"/>
+    <!--<allow name="bluetooth_headsetphone" src="com.android.bluetooth" dst="com.android.phone"/>-->
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.bluetooth.IBluetoothHeadset"/>
+    </filter>
+    <allow name="bluetooth_platform" src="platform_key" dst="platform_key"/>
+    <!--<allow name="bluetooth_headset" dst="com.android.bluetooth" src="com.android.phone"/>-->
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.bluetooth.IBluetoothInputDevice"/>
+    </filter>
+    <allow name="bluetooth_platform" src="platform_key" dst="platform_key"/>
+    <!--<allow name="bluetooth_headsetphone" src="com.android.settings" dst="com.android.bluetooth"/>-->
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.bluetooth.IBluetoothPbap"/>
+    </filter>
+    <allow name="bluetooth_platform" src="platform_key" dst="platform_key"/>
+    <!--<allow name="bluetooth_headsetphone" src="com.android.settings" dst="com.android.bluetooth"/>-->
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.media.action.IMAGE_CAPTURE"/>
+    </filter>
+    <allow name="camera_image" src="camera_perm"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.media.action.VIDEO_CAPTURE"/>
+    </filter>
+    <allow name="camera_video" src="video_perm"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.app.action.ADD_DEVICE_ADMIN"/>
+    </filter>
+    <!-- Allow all apps this intent because Settings shows a UI for user to
+         accept -->
+    <allow name="device_admin" dst="com.android.settings"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.service.wallpaper.LIVE_WALLPAPER_CHOOSER"/>
+    </filter>
+    <allow name="wallpaper_chooser" dst="com.android.wallpaper.livepicker"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.bluetooth.adapter.action.LOCAL_NAME_CHANGED"/>
+    </filter>
+    <allow src="bluetooth" dst="settings"/>
+    <allow src="bluetooth" dst="android"/>
+    <allow src="bluetooth" dst="settings"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="com.android.internal.telephony.cdma.intent.action.TTY_ENABLED_CHANGE"/>
+    </filter>
+    <allow src="phone" dst="systemui"/>
+    <allow src="telephony" dst="systemui"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="com.android.internal.telephony"/>
+    </filter>
+    <allow src="phone" dst="settings"/>
+    <allow src="phone" dst="android"/>
+    <allow src="telephony" dst="settings"/>
+    <allow src="telephony" dst="android"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.bluetooth.adapter.action.DISCOVERY_FINISHED"/>
+    </filter>
+    <allow src="bluetooth" dst="settings"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.bluetooth.adapter.action.SCAN_MODE_CHANGED"/>
+    </filter>
+    <allow src="bluetooth" dst="settings"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.intent.action.ALARM_CHANGED"/>
+    </filter>
+    <allow src="deskclock_app" dst="systemui"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.intent.action.SIM_STATE_CHANGED"/>
+    </filter>
+    <allow src="phone" dst="settings"/>
+    <allow src="phone" dst="android"/>
+    <allow src="telephony" dst="settings"/>
+    <allow src="telephony" dst="android"/>
+    <allow src="phone" dst="systemui"/>
+    <allow src="telephony" dst="systemui"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.intent.action.ANY_DATA_STATE"/>
+    </filter>
+    <allow src="phone" dst="settings"/>
+    <allow src="phone" dst="android"/>
+    <allow src="telephony" dst="settings"/>
+    <allow src="telephony" dst="android"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.bluetooth.adapter.action.DISCOVERY_STARTED"/>
+    </filter>
+    <allow src="bluetooth" dst="settings"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="android.provider.Telephony.SPN_STRINGS_UPDATED"/>
+    </filter>
+    <allow src="phone" dst="settings"/>
+    <allow src="phone" dst="android"/>
+    <allow src="telephony" dst="settings"/>
+    <allow src="telephony" dst="android"/>
+    <allow src="phone" dst="systemui"/>
+    <allow src="telephony" dst="systemui"/>
+  </intent>
+  <intent>
+    <filter>
+      <action name="com.android.internal.telephony.IWapPushManager"/>
+    </filter>
+    <allow src="wappush_manager" dst="wappush_app"/>
+  </intent>
+
+  <!-- TODO Should we have multiple src and destination types? ie, calling
+       package must have these two types and destination package must have
+       these three types -->
+
+  <allow-all>
+    <!--
+      The allow-all tag is intended to allow all intents between two types,
+      eg, phone should always be able to send intents to SMS push.
+    -->
+    <allow name="phone_to_sms" src="com.android.phone" dst="com.android.smspush"/>
+    <allow name="settings_to_defconfig" src="com.android.settings" dst="com.android.defcontainer"/>
+    <!-- This needed to allow Apps screen in Settings app to work. Settings
+         app invokes the Default Container Service with a direct intent (eg,
+         action=null and cmp=name of component)
+         TODO How do we handle this case? How do we handle direct intents?
+         How do we express the non-existent/blank ac tion string in policy -->
+    <allow name="shell" srcctx="u:r:shell:s0"/>
+    <allow name="su" srcctx="u:r:su:s0"/>
+  </allow-all>
+</policy>

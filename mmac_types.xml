@@ -1,0 +1,102 @@
+<policy>
+  <type name="camera_perm">
+    <permission value="android.permission.CAMERA"/>
+    <permission value="android.permission.ACCESS_FINE_LOCATION"/>
+    <permission value="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!-- Camera may embed GPS data into image -->
+  </type>
+  <type name="video_perm">
+    <permission value="android.permission.CAMERA"/>
+    <permission value="android.permission.RECORD_AUDIO"/>
+  </type>
+  <type name="wallpaper_perm">
+    <permission value="android.permission.SET_WALLPAPER"/>
+  </type>
+
+  <type name="mms_sms_app">
+    <permission value="android.permission.RECEIVE_SMS"/>
+    <permission value="android.permission.RECEIVE_MMS"/>
+    <permission value="android.permission.SEND_SMS"/>
+    <permission value="android.permission.READ_SMS"/>
+    <permission value="android.permission.WRITE_SMS"/>
+  </type>
+
+  <type name="phone_state_perm">
+    <permission value="android.permission.READ_PHONE_STATE"/>
+  </type>
+
+  <type name="nfc_system">
+    <signature value="@PLATFORM"/>
+    <package value="com.android.nfc"/>
+  </type>
+  <type name="nfc_handler">
+    <permission value="android.permission.NFC"/>
+  </type>
+  <!--
+  <type name="nfc_handler">
+    <package value="com.android.apps.tag"/>
+    <signature value="@RELEASE" />
+  </type>
+  <type>
+    <package value="com.google.android.tag"/>
+    <signature value="(google cert here)"/>
+  </type>
+  -->
+
+  <type name="system_server">
+    <signature value="@PLATFORM"/>
+    <package value="android"/>
+  </type>
+
+  <type name="bluetooth">
+    <signature value="@PLATFORM"/>
+    <package value="com.android.bluetooth"/>
+  </type>
+
+  <type name="wappush_manager">
+    <signature value="@PLATFORM"/>
+    <permission value="com.android.smspush.WAPPUSH_MANAGER_BIND"/>
+  </type>
+
+  <type name="settings_app">
+    <signature value="@PLATFORM"/>
+    <package value="com.android.settings"/>
+  </type>
+
+  <type name="systemui">
+    <signature value="@PLATFORM"/>
+    <package value="com.android.systemui"/>
+  </type>
+
+  <type name="telephony_app">
+    <signature value="@PLATFORM"/>
+    <package value="com.android.phone"/>
+  </type>
+
+  <type name="quicksearchbox_app">
+    <signature value="@SHARED"/>
+    <package value="com.android.quicksearchbox"/>
+  </type>
+
+  <type name="livewallpapers">
+    <signature value="@SHARED"/>
+    <package value="com.android.wallpaper"/>
+  </type>
+
+  <type name="deskclock_app">
+    <signature value="@RELEASE"/>
+    <package value="com.android.deskclock"/>
+  </type>
+
+  <type name="wappush_app">
+    <signature value="@RELEASE"/>
+    <package value="com.android.smspush"/>
+  </type>
+
+  <type name="launcher_app">
+    <signature value="@SHARED"/>
+    <package value="com.android.launcher"/>
+  </type>
+
+</policy>
+<!-- TODO Possible other selectors for types: uses-feature, intent-filter -->

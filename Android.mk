@@ -187,6 +187,58 @@ $(LOCAL_BUILT_MODULE) : $(mac_perms_keys.tmp) $(HOST_OUT_EXECUTABLES)/insertkeys
 mac_perms_keys.tmp :=
 ##################################
 
+##################################
+include $(CLEAR_VARS)
+
+LOCAL_MODULE := mmac_types.xml
+LOCAL_MODULE_CLASS := ETC
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_PATH := $(TARGET_OUT_ETC)/security
+
+include $(BUILD_SYSTEM)/base_rules.mk
+
+# Build keys.conf
+mmac_types_keys.tmp := $(intermediates)/keys.tmp
+$(mmac_types_keys.tmp) : $(call build_policy, keys.conf)
+	@mkdir -p $(dir $@)
+	$(hide) m4 -s $^ > $@
+
+ALL_MMAC_TYPES_FILES := $(call build_policy, $(LOCAL_MODULE))
+
+$(LOCAL_BUILT_MODULE) : $(mmac_types_keys.tmp) $(HOST_OUT_EXECUTABLES)/insertkeys.py $(ALL_MMAC_TYPES_FILES)
+	@mkdir -p $(dir $@)
+	$(hide) $(HOST_OUT_EXECUTABLES)/insertkeys.py -t $(TARGET_BUILD_VARIANT) -c $(ANDROID_BUILD_TOP) $< -o $@ $(ALL_MMAC_TYPES_FILES)
+
+mmac_types_keys.tmp :=
+##################################
+
+##################################
+include $(CLEAR_VARS)
+
+LOCAL_MODULE := intent_mac.xml
+LOCAL_MODULE_CLASS := ETC
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_PATH := $(TARGET_OUT_ETC)/security
+
+include $(BUILD_SYSTEM)/base_rules.mk
+
+# Build keys.conf, not really needed for the intent_mac
+# files because we don't have sigs here. We use
+# it so the insertkeys.py will union the xml files instead.
+intent_mac_keys.tmp := $(intermediates)/keys.tmp
+$(intent_mac_keys.tmp) : $(call build_policy, keys.conf)
+	@mkdir -p $(dir $@)
+	$(hide) m4 -s $^ > $@
+
+ALL_INTENT_MAC_FILES := $(call build_policy, $(LOCAL_MODULE))
+
+$(LOCAL_BUILT_MODULE) : $(intent_mac_keys.tmp) $(HOST_OUT_EXECUTABLES)/insertkeys.py $(ALL_INTENT_MAC_FILES)
+	@mkdir -p $(dir $@)
+	$(hide) $(HOST_OUT_EXECUTABLES)/insertkeys.py -t $(TARGET_BUILD_VARIANT) -c $(ANDROID_BUILD_TOP) $< -o $@ $(ALL_INTENT_MAC_FILES)
+
+intent_mac_keys.tmp :=
+##################################
+
 build_policy :=
 sepolicy_replace_paths :=
 
