@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <policy>
 
-<!-- 
+<!--
 
     Rules:
     * A signature is a hex encoded X.509 certificate and is required for each signer tag.

@@ -186,6 +186,28 @@ $(LOCAL_BUILT_MODULE) : $(mac_perms_keys.tmp) $(HOST_OUT_EXECUTABLES)/insertkeys
 
 mac_perms_keys.tmp :=
 ##################################
+include $(CLEAR_VARS)
+
+LOCAL_MODULE := content_permissions.xml
+LOCAL_MODULE_CLASS := ETC
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_PATH := $(TARGET_OUT_ETC)/security
+
+include $(BUILD_SYSTEM)/base_rules.mk
+
+# Build keys.conf
+content_keys.tmp := $(intermediates)/keys.tmp
+$(content_keys.tmp) : $(call build_policy, keys.conf)
+	@mkdir -p $(dir $@)
+	$(hide) m4 -s $^ > $@
+
+ALL_CONTENT_FILES := $(call build_policy, $(LOCAL_MODULE))
+
+$(LOCAL_BUILT_MODULE) : $(content_keys.tmp) $(HOST_OUT_EXECUTABLES)/insertkeys.py $(ALL_CONTENT_FILES)
+	@mkdir -p $(dir $@)
+	$(hide) $(HOST_OUT_EXECUTABLES)/insertkeys.py -t $(TARGET_BUILD_VARIANT) -c $(ANDROID_BUILD_TOP) $< -o $@ $(ALL_CONTENT_FILES)
+
+content_keys.tmp :=
 
 ##################################
 include $(CLEAR_VARS)

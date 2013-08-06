@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policy>
+
+    <attributes>
+        <attribute name="all">
+            <type name="platform"/>
+            <type name="release"/>
+            <type name="shared"/>
+            <type name="gapps"/>
+            <type name="media"/>
+            <type name="vpn"/>
+            <type name="default"/>
+        </attribute>
+
+        <attribute name="trusted_apps">
+          <type name="platform"/>
+          <type name="release"/>
+          <type name="shared"/>
+          <type name="gapps"/>
+          <type name="media"/>
+        </attribute>
+
+        <attribute name="platformOrGapps">
+            <type name="platform"/>
+            <type name="gapps"/>
+        </attribute>
+
+         <attribute name="all_calendar_provider">
+           <type name="calendar_provider"/>
+           <type name="calendar_suggestions_provider"/>
+         </attribute>
+
+         <attribute name="all_contacts_provider">
+           <type name="contacts_share_provider"/>
+           <type name="contacts_call_provider"/>
+           <type name="contacts_dump_provider"/>
+         </attribute>
+
+         <attribute name="all_telephony_provider">
+           <type name="telephony_provider"/>
+           <type name="mms_sms_provider"/>
+           <type name="cell_provider"/>
+         </attribute>
+
+         <attribute name="all_media_provider">
+           <type name="media_provider"/>
+           <type name="drm_provider"/>
+         </attribute>
+
+         <attribute name="all_email_provider">
+           <type name="email_attach_provider"/>
+           <type name="email_protected_provider"/>
+           <type name="email_partner_provider"/>
+         </attribute>
+
+         <attribute name="all_browser_provider">
+           <type name="browser_exported_provider"/>
+           <type name="browser_protected_provider"/>
+         </attribute>
+
+         <attribute name="all_search_provider">
+           <type name="search_provider"/>
+           <type name="dictionary_provider"/>
+         </attribute>
+
+    </attributes>
+
+    <!-- src types for entire packages (hopefully provide more
+         granularity by incorporating with mmac_types).
+         We want a mechanism different then seinfo string here.
+         Though not strictly an android component, we want to
+         soon combine intent,service,provider,receiver,package
+         into a single policy? Think of the component piece as
+         a class.
+    -->
+
+    <!--
+        The listed order of the package policy stanzas is generally
+        not important. The stanzas get read in by ContentSecurityManager.java
+        and then reshuffled based on certain precedence rules. The rules are:
+
+          (1)signature defined over signature not defined
+          (2)package name defined over package name not defined
+          (3)permission set defined over permission set not defined
+    -->
+    <type name="platform" component="package">
+      <signature value="@PLATFORM"/>
+    </type>
+
+    <type name="shared" component="package">
+      <signature value="@SHARED"/>
+    </type>
+
+    <type name="release" component="package">
+      <signature value="@RELEASE"/>
+    </type>
+
+    <type name="media" component="package">
+      <signature value="@MEDIA"/>
+    </type>
+
+    <type name="defualt_package" component="package">
+    </type>
+
+    <!-- Example package policy stanza without signature tag.
+         We would recommend however that a package name alone
+         provides no real protection as any app can specifiy
+         this package name.
+    <type name="demo_resolver_package" component="package">
+      <package value="com.example.resolvecontentdemo" />
+      <permission value="com.example.contentprovider1.READ" />
+      <permission value="com.example.contentprovider1.WRITE" />
+    </type>
+    -->
+    <!-- end of package types -->
+
+
+
+    <!--
+        The listed order of the provider policy stanzas is generally
+        not important. The stanzas get read in by ContentSecurityManager.java
+        and then reshuffled based on certain precedence rules. The rules are:
+
+          (1)signature defined over signature not defined
+          (2)provider defined over provider not defined
+          (3)package name defined over package name not defined
+          (4)export-read defined over not defined
+          (5)export-write defined over not defined
+
+       The export-read and export-write deserve some explanation. Android
+       already ranks protection levels on defined permissions according to
+       risk. Essentially normal < dangerous < signatureOrSystem < signature
+       A policy tag can be added that allows typing based on this ranking.
+       For example, <export-read value="dangerous"/> is a selector that ensures
+       the type in question is only assigned when there is a read permission
+       with a protection level of dangerous or higher on the content provider.
+    -->
+    <!-- telephony related providers -->
+    <type name="telephony_provider">
+      <signature value="@PLATFORM"/>
+      <provider value="telephony"/>
+    </type>
+
+    <type name="cell_provider">
+      <signature value="@PLATFORM"/>
+      <provider value="icc"/>
+      <provider value="cellbroadcasts"/>
+    </type>
+
+    <type name="mms_sms_provider">
+      <signature value="@PLATFORM"/>
+      <provider value="mms"/>
+      <provider value="sms"/>
+      <provider value="mms-sms"/>
+    </type>
+    <!-- end telephony related providers -->
+
+
+    <!-- contacts related providers -->
+    <type name="contacts_call_provider">
+      <signature value="@SHARED"/>
+      <provider value="call_log"/>
+      <provider value="com.android.voicemail"/>
+    </type>
+
+    <type name="contacts_share_provider">
+      <signature value="@SHARED"/>
+      <provider value="contacts"/>
+      <provider value="com.android.contacts"/>
+    </type>
+
+    <type name="contacts_dump_provider">
+      <signature value="@SHARED"/>
+      <provider value="com.android.contacts.dumpfile"/>
+    </type>
+    <!-- end of contacts related providers -->
+
+
+    <!-- calender related providers -->
+    <type name="calendar_provider">
+      <signature value="@RELEASE"/>
+      <provider value="com.android.calendar"/>
+    </type>
+
+    <type name="calendar_suggestions_provider">
+      <signature value="@RELEASE"/>
+      <provider value="com.android.calendar.CalendarRecentSuggestionsProvider"/>
+    </type>
+    <!-- end calender related providers -->
+
+
+    <!-- media related content providers -->
+    <type name="media_provider">
+      <signature value="@MEDIA"/>
+      <provider value="media"/>
+      <provider value="downloads"/>
+    </type>
+
+    <type name="drm_provider">
+      <signature value="@MEDIA"/>
+      <provider value="drm"/>
+    </type>
+    <!-- end media related content providers -->
+
+
+    <!-- email content providers -->
+    <type name="email_attach_provider">
+      <signature value="@RELEASE"/>
+      <provider value="com.android.email.attachmentprovider"/>
+      <provider value="com.android.exchange.directory.provider"/>
+    </type>
+
+    <type name="email_protected_provider">
+      <signature value="@RELEASE"/>
+      <provider value="com.android.email.notifier"/>
+      <provider value="com.android.email.provider"/>
+    </type>
+
+    <type name="email_partner_provider">
+      <signature value="@RELEASE"/>
+      <provider value="com.android.partnerbookmarks"/>
+    </type>
+    <!-- end email content providers -->
+
+
+    <!-- browser related content providers -->
+    <type name="browser_exported_provider">
+      <signature value="@RELEASE"/>
+      <provider value="com.android.browser"/>
+      <provider value="browser"/>
+    </type>
+
+    <type name="browser_protected_provider">
+      <signature value="@RELEASE"/>
+      <provider value="com.android.browser.home"/>
+      <provider value="com.android.browser.snapshots"/>
+    </type>
+    <!-- end of browser related content providers -->
+
+
+    <!-- gallery related content providers -->
+    <type name="gallery_provider">
+      <signature value="@RELEASE"/>
+      <provider value="com.android.gallery3d.filtershow.provider.SharedImageProvider"/>
+      <provider value="com.android.gallery3d.provider"/>
+    </type>
+    <!-- end gallery related content providers -->
+
+
+    <!-- search related content providers -->
+    <type name="search_provider">
+      <signature value="@SHARED"/>
+      <provider value="com.android.quicksearchbox.shortcuts"/>
+      <provider value="com.android.quicksearchbox.google"/>
+      <provider value="applications"/>
+    </type>
+
+    <type name="dictionary_provider">
+      <signature value="@SHARED"/>
+      <provider value="user_dictionary"/>
+    </type>
+    <!-- end of search related content providers -->
+
+
+    <!-- not sure where to put this yet, exported with write perm -->
+    <type name="settings_provider">
+      <signature value="@PLATFORM"/>
+      <provider value="settings"/>
+    </type>
+
+
+    <!-- Defualt types for system apps -->
+    <type name="platform_default_provider">
+      <signature value="@PLATFORM"/>
+    </type>
+
+    <type name="shared_default_provider">
+      <signature value="@SHARED"/>
+    </type>
+
+    <type name="media_default_provider">
+      <signature value="@MEDIA"/>
+    </type>
+
+    <type name="release_default_provider">
+      <signature value="@RELEASE"/>
+    </type>
+
+    <!-- Default types for third party apps -->
+    <!-- For third party apps with protected perms on read -->
+    <type name="default_trusted_read_provider">
+      <export-read value="signature"/>
+    </type>
+
+    <!-- For third party apps with protected perms on write -->
+    <type name="default_trusted_write_provider">
+      <export-write value="signature"/>
+    </type>
+
+    <type name="default_provider">
+    </type>
+    <!-- end of default types -->
+
+
+    <!-- access rules -->
+    <allow-content>
+
+      <!-- We probably need more granularity on the source types. Think about
+           using mmac type support for this. -->
+      <allow source="all" destination="settings_provider" permission="use;r"/>
+      <allow source="trusted_apps" destination="all_contacts_provider" permission="use;r"/>
+
+      <allow source="platform" destination="media_provider" permission="use;rw"/>
+      <allow source="release" destination="mms_sms_provider" permission="use;rw"/>
+      <allow source="release" destination="browser_exported_provider" permission="use;rw"/>
+
+      <allow source="release" destination="all_calendar_provider" permission="use;r"/>
+      <allow source="release" destination="all_email_provider" permission="use;r"/>
+
+      <allow source="platform" destination="all_telephony_provider" permission="use;r"/>
+
+      <allow source="release" destination="search_provider" permission="use;r"/>
+      <allow source="release" destination="media_provider" permission="use;rw"/>
+
+      <allow source="shared" destination="dictionary_provider" permission="use;r"/>
+      <allow source="shared" destination="email_attach_provider" permission="use;r"/>
+
+      <allow source="default" destination="default_trusted_read_provider" permission="use;r"/>
+      <allow source="default" destination="default_trusted_write_provider" permission="use;w"/>
+
+    </allow-content>
+
+</policy>
