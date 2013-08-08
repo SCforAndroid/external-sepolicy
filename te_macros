@@ -109,6 +109,13 @@ tmpfs_domain($1)
 ')
 
 #####################################
+# containerapp_domain(domain, file_type)
+define(`containerapp_domain'. `
+typeattribute $1 containerappdomain;
+app_domain($1)
+')
+
+#####################################
 # untrustedapp_domain(domain, file_type)
 # Allow a base set of permissions required for all untrusted apps.
 define(`untrustedapp_domain', `

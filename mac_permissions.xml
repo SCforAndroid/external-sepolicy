@@ -184,6 +184,13 @@
       </package>
     </signer>
 
+    <!-- Key for apps part of the container -->
+    <signer signature="@CONTAINER" >
+        <seinfo value="container" />
+        <!-- TODO need to refine this to fit our purpose -->
+        <allow-all />
+    </signer>
+
     <!-- All other keys -->
     <default>
       <seinfo value="default" />
