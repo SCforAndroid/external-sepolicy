@@ -100,7 +100,7 @@
       <signature value="@MEDIA"/>
     </type>
 
-    <type name="default_package" component="package">
+    <type name="default" component="package">
     </type>
 
     <type name="container" component="package">
