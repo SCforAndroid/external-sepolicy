@@ -99,7 +99,7 @@
       <signature value="@MEDIA"/>
     </type>
 
-    <type name="defualt_package" component="package">
+    <type name="default_package" component="package">
     </type>
 
     <!-- Example package policy stanza without signature tag.
