@@ -102,6 +102,10 @@
     <type name="default_package" component="package">
     </type>
 
+    <type name="container" component="package">
+      <signature value="@CONTAINER"/>
+    </type>
+
     <!-- Example package policy stanza without signature tag.
          We would recommend however that a package name alone
          provides no real protection as any app can specifiy
@@ -327,6 +331,8 @@
 
       <allow source="default" destination="default_trusted_read_provider" permission="use;r"/>
       <allow source="default" destination="default_trusted_write_provider" permission="use;w"/>
+
+      <allow source="container" destination="all_contacts_provider" permission="use;rw"/>
 
     </allow-content>
 
