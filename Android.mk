@@ -205,7 +205,7 @@ ALL_CONTENT_FILES := $(call build_policy, $(LOCAL_MODULE))
 
 $(LOCAL_BUILT_MODULE) : $(content_keys.tmp) $(HOST_OUT_EXECUTABLES)/insertkeys.py $(ALL_CONTENT_FILES)
 	@mkdir -p $(dir $@)
-	$(hide) $(HOST_OUT_EXECUTABLES)/insertkeys.py -t $(TARGET_BUILD_VARIANT) -c $(ANDROID_BUILD_TOP) $< -o $@ $(ALL_CONTENT_FILES)
+	$(hide) $(HOST_OUT_EXECUTABLES)/insertkeys.py -t $(TARGET_BUILD_VARIANT) -d $(dir $(DEFAULT_SYSTEM_DEV_CERTIFICATE)) -c $(ANDROID_BUILD_TOP) $< -o $@ $(ALL_CONTENT_FILES)
 
 content_keys.tmp :=
 
@@ -229,7 +229,7 @@ ALL_MMAC_TYPES_FILES := $(call build_policy, $(LOCAL_MODULE))
 
 $(LOCAL_BUILT_MODULE) : $(mmac_types_keys.tmp) $(HOST_OUT_EXECUTABLES)/insertkeys.py $(ALL_MMAC_TYPES_FILES)
 	@mkdir -p $(dir $@)
-	$(hide) $(HOST_OUT_EXECUTABLES)/insertkeys.py -t $(TARGET_BUILD_VARIANT) -c $(ANDROID_BUILD_TOP) $< -o $@ $(ALL_MMAC_TYPES_FILES)
+	$(hide) $(HOST_OUT_EXECUTABLES)/insertkeys.py -t $(TARGET_BUILD_VARIANT) -d $(dir $(DEFAULT_SYSTEM_DEV_CERTIFICATE))  -c $(ANDROID_BUILD_TOP) $< -o $@ $(ALL_MMAC_TYPES_FILES)
 
 mmac_types_keys.tmp :=
 ##################################
@@ -256,7 +256,7 @@ ALL_INTENT_MAC_FILES := $(call build_policy, $(LOCAL_MODULE))
 
 $(LOCAL_BUILT_MODULE) : $(intent_mac_keys.tmp) $(HOST_OUT_EXECUTABLES)/insertkeys.py $(ALL_INTENT_MAC_FILES)
 	@mkdir -p $(dir $@)
-	$(hide) $(HOST_OUT_EXECUTABLES)/insertkeys.py -t $(TARGET_BUILD_VARIANT) -c $(ANDROID_BUILD_TOP) $< -o $@ $(ALL_INTENT_MAC_FILES)
+	$(hide) $(HOST_OUT_EXECUTABLES)/insertkeys.py -t $(TARGET_BUILD_VARIANT) -d $(dir $(DEFAULT_SYSTEM_DEV_CERTIFICATE)) -c $(ANDROID_BUILD_TOP) $< -o $@ $(ALL_INTENT_MAC_FILES)
 
 intent_mac_keys.tmp :=
 ##################################
