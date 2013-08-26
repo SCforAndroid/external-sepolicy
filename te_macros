@@ -110,9 +110,17 @@ tmpfs_domain($1)
 
 #####################################
 # containerapp_domain(domain, file_type)
-define(`containerapp_domain'. `
+define(`containerapp_domain', `
+# The new domain is part of containerappdomain
 typeattribute $1 containerappdomain;
+
+# The new container appdomain is a part of appdomain
 app_domain($1)
+
+# App sandbox file accesses.
+# Possibly create a new sandbox for this app
+allow $1 $2:dir create_dir_perms;
+allow $1 $2:notdevfile_class_set create_file_perms;
 ')
 
 #####################################
