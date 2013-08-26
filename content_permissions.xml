@@ -10,6 +10,7 @@
             <type name="media"/>
             <type name="vpn"/>
             <type name="default"/>
+            <type name="container"/>
         </attribute>
 
         <attribute name="trusted_apps">
