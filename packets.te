@@ -1,0 +1,6 @@
+type wlan_packet;
+type lo_packet;
+type ppp0_packet;
+type ppp1_packet;
+type ppp2_packet;
+type ppp3_packet;

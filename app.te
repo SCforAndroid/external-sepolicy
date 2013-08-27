@@ -102,6 +102,9 @@ containerapp_domain(container_app, container_app_data_file)
 net_domain(container_app)
 bluetooth_domain(container_app)
 
+# Allow network traffic over wlan to all container apps
+allow container_app wlan_packet:packet { recv send };
+
 #
 # Untrusted apps.
 #
@@ -213,3 +216,10 @@ allow { appdomain isolated_app } system_data_file:lnk_file getattr;
 # Allow all applications to read downloaded files.
 allow appdomain download_file:dir search;
 allow appdomain download_file:file r_file_perms;
+
+# Allow all applications to use ppp and lo network interfaces
+allow appdomain lo_packet:packet { send recv };
+allow appdomain ppp0_packet:packet { send recv };
+allow appdomain ppp1_packet:packet { send recv };
+allow appdomain ppp2_packet:packet { send recv };
+allow appdomain ppp3_packet:packet { send recv };
